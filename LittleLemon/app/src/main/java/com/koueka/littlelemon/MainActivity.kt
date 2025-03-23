@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.koueka.littlelemon.composable.Onboarding
 import com.koueka.littlelemon.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             LittleLemonTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+
+                    Onboarding()
+                    /*Greeting(
+                        name = "Karly",
                         modifier = Modifier.padding(innerPadding)
-                    )
+                    )*/
                 }
             }
         }
