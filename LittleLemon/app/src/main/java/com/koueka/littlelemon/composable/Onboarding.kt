@@ -33,7 +33,7 @@ import com.koueka.littlelemon.ui.theme.Yellow80
 
 @Composable
 fun Onboarding() {
-    Column(modifier = Modifier.padding(top = 30.dp, start = 0.dp)) {
+    Column(modifier = Modifier.padding(top = 0.dp, start = 0.dp)) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
