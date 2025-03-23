@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import com.koueka.littlelemon.composable.Home
 import com.koueka.littlelemon.composable.Profile
 import com.koueka.littlelemon.composable.Onboarding
+import com.koueka.littlelemon.composable.UserProfile
+
 
 const val SHARED_PREFERENCES_KEY = "LilLemPrefs"
 const val SHARED_PREFERENCES_DEFAULT_VALUE = "Empty"
@@ -23,7 +25,10 @@ const val SHARED_PREFERENCES_EMAIL = "EMAIL"
 fun LLNavigation(naviController: NavHostController) {
 
     //set defqult route to Home assuming that sharedpreferences have been set
-    var destination = Home.route
+//    var destination = Home.route
+
+    var destination = Profile.route
+
     //check sharedPreference
     if (readSharedPreferences(naviController.context)) {
         destination = Onboarding.route
@@ -34,7 +39,7 @@ fun LLNavigation(naviController: NavHostController) {
             Home()
         }
         composable(Profile.route) {
-            Profile()
+            Profile(naviController)
         }
         composable(Onboarding.route) {
             Onboarding(naviController)
@@ -56,6 +61,25 @@ fun readSharedPreferences(context: Context): Boolean {
     return result
 }
 
+fun readAllDataSharedPreferences(context: Context): UserProfile {
+    val sharedPreferences : SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
+
+    val firstName = sharedPreferences.getString(
+        SHARED_PREFERENCES_FIRST_NAME,
+        SHARED_PREFERENCES_DEFAULT_VALUE)
+
+    val lastName = sharedPreferences.getString(
+        SHARED_PREFERENCES_LAST_NAME,
+        SHARED_PREFERENCES_DEFAULT_VALUE)
+
+    val email = sharedPreferences.getString(
+        SHARED_PREFERENCES_EMAIL,
+        SHARED_PREFERENCES_DEFAULT_VALUE)
+
+    return UserProfile(firstName!!, lastName!!, email!!)
+}
+
 //if the sharedPreferences have not been set the function will return true
 // and else otherwise
 fun saveSharedPreferences(
@@ -71,6 +95,14 @@ fun saveSharedPreferences(
     sharedPreferences.edit()
         .putString(SHARED_PREFERENCES_FIRST_NAME, firstName)
         .putString(SHARED_PREFERENCES_LAST_NAME, lastName)
-        .putString(SHARED_PREFERENCES_DEFAULT_VALUE, email)
+        .putString(SHARED_PREFERENCES_EMAIL, email)
         .commit()
+}
+
+fun clearSharedPreferences(context: Context) {
+    val sharedPreferences : SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
+
+    //save data
+    sharedPreferences.edit().clear().commit()
 }
