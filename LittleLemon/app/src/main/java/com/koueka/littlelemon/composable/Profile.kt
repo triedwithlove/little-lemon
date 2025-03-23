@@ -17,20 +17,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.koueka.littlelemon.R
+import com.koueka.littlelemon.navigation.clearSharedPreferences
+import com.koueka.littlelemon.navigation.readAllDataSharedPreferences
 import com.koueka.littlelemon.ui.theme.Green80
 import com.koueka.littlelemon.ui.theme.LittleLemonTheme
 import com.koueka.littlelemon.ui.theme.Yellow80
 
 
+data class UserProfile(
+    val fName: String,
+    val lName: String,
+    val email: String
+)
+
 @Composable
-fun Profile() {
+fun Profile(navController: NavHostController) {
     Column(modifier = Modifier.padding(top = 30.dp, start = 0.dp)) {
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -38,7 +48,6 @@ fun Profile() {
             modifier = Modifier
                 .padding(50.dp)
                 .align(Alignment.CenterHorizontally)
-
         )
 
         Text(
@@ -69,7 +78,18 @@ fun Profile() {
 //            var lastName by remember { mutableStateOf("") }
 //            var email by remember { mutableStateOf("") }
 
+
+
+
 //            val context = LocalContext.current
+            val context = LocalContext.current
+            fun logOut() {
+                clearSharedPreferences(context)
+                navController.navigate(com.koueka.littlelemon.navigation.Onboarding.route)
+            }
+
+            val userProfile: UserProfile = readAllDataSharedPreferences(context)
+            android.util.Log.d("MAINACTIVITY", "${userProfile}")
 /*
             fun checkFieldsAndRegister() {
                 if ((firstName.isBlank())
@@ -90,9 +110,9 @@ fun Profile() {
                 }
             }
 */
-            ProfileItem(label = "First Name", name = "John")
-            ProfileItem(label = "Last Name", name = "DOE")
-            ProfileItem(label = "Email", name = "John@doe.com")
+            ProfileItem(label = "First Name", name = "${userProfile.fName}")
+            ProfileItem(label = "Last Name", name = "${userProfile.lName}")
+            ProfileItem(label = "Email", name = "${userProfile.email}")
             Box (
                 modifier = Modifier
                     .fillMaxSize()
@@ -101,7 +121,7 @@ fun Profile() {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /*checkFieldsAndRegister()*/ },
+                    onClick = { logOut() },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(Yellow80)
 
@@ -153,7 +173,7 @@ fun ProfileItem(label: String, name: String) {
     }
 }
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun ProfilePreview() {
@@ -161,3 +181,4 @@ fun ProfilePreview() {
         Profile()
     }
 }
+*/
