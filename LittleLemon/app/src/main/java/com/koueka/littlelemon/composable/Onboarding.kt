@@ -1,5 +1,7 @@
 package com.koueka.littlelemon.composable
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,19 +22,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.koueka.littlelemon.R
+import com.koueka.littlelemon.navigation.saveSharedPreferences
 import com.koueka.littlelemon.ui.theme.Green80
 import com.koueka.littlelemon.ui.theme.LittleLemonTheme
 import com.koueka.littlelemon.ui.theme.Yellow80
 
 @Composable
-fun Onboarding() {
+fun Onboarding(navController: NavHostController) {
     Column(modifier = Modifier.padding(top = 0.dp, start = 0.dp)) {
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -70,6 +75,28 @@ fun Onboarding() {
             var firstName by remember { mutableStateOf("") }
             var lastName by remember { mutableStateOf("") }
             var email by remember { mutableStateOf("") }
+
+            val context = LocalContext.current
+
+            fun checkFieldsAndRegister() {
+                if ((firstName.isBlank())
+                    || (lastName.isBlank())
+                    || (email.isBlank())
+                ) {
+                    android.util.Log.d("MAINACTIVITY", "Empty string")
+                    Toast.makeText(context,
+                        "Registration unsuccessfull\nPlease enter all data", Toast.LENGTH_LONG).show()
+                } else {
+                    android.util.Log.d("MAINACTIVITY", "All strings filled")
+                    //registration
+                    saveSharedPreferences(context, firstName, lastName, email)
+                    Toast.makeText(context,
+                        "Registration successfull", Toast.LENGTH_LONG).show()
+                    navController.navigate(com.koueka.littlelemon.navigation.Home.route)
+
+                }
+            }
+
 
             OutlinedTextField(
                 value = firstName,
@@ -109,7 +136,7 @@ fun Onboarding() {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { checkFieldsAndRegister() },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(Yellow80)
 
@@ -124,18 +151,12 @@ fun Onboarding() {
                     )
                 }
             }
-
-
         }
-
-
-
-
-
     }
 
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun OnbordingPreview() {
@@ -143,4 +164,4 @@ fun OnbordingPreview() {
         Onboarding()
     }
 }
-
+*/
