@@ -2,9 +2,16 @@ package com.koueka.littlelemon.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.koueka.littlelemon.R
 import com.koueka.littlelemon.ui.theme.Green80
 import com.koueka.littlelemon.ui.theme.LittleLemonTheme
+import com.koueka.littlelemon.ui.theme.Yellow80
 
 
 @Composable
@@ -44,9 +52,106 @@ fun Profile() {
             color = Color.White,
             textAlign = TextAlign.Center
         )
+
+        Text(
+            text = "Profile information",
+            modifier = Modifier
+                .fillMaxWidth()
+//                .background(Color.White)
+                .padding(top = 40.dp, bottom = 10.dp, start = 5.dp),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)) {
+//            var firstName by remember { mutableStateOf("") }
+//            var lastName by remember { mutableStateOf("") }
+//            var email by remember { mutableStateOf("") }
+
+//            val context = LocalContext.current
+/*
+            fun checkFieldsAndRegister() {
+                if ((firstName.isBlank())
+                    || (lastName.isBlank())
+                    || (email.isBlank())
+                ) {
+                    android.util.Log.d("MAINACTIVITY", "Empty string")
+                    Toast.makeText(context,
+                        "Registration unsuccessfull\nPlease enter all data", Toast.LENGTH_LONG).show()
+                } else {
+                    android.util.Log.d("MAINACTIVITY", "All strings filled")
+                    //registration
+                    saveSharedPreferences(context, firstName, lastName, email)
+                    Toast.makeText(context,
+                        "Registration successfull", Toast.LENGTH_LONG).show()
+//                    navController.navigate(com.koueka.littlelemon.navigation.Home.route)
+
+                }
+            }
+*/
+            ProfileItem(label = "First Name", name = "John")
+            ProfileItem(label = "Last Name", name = "DOE")
+            ProfileItem(label = "Email", name = "John@doe.com")
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+//                    .background(Color.White)
+                    .padding(bottom = 50.dp),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Button(
+                    onClick = { /*checkFieldsAndRegister()*/ },
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(Yellow80)
+
+                ) {
+                    Text(
+                        text = "Log out",
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        fontSize = 20.sp,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        }
+
     }
+
 }
 
+@Composable
+fun ProfileItem(label: String, name: String) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+//        .background(Color.White)
+        .padding(top = 5.dp, bottom = 5.dp, start = 5.dp)
+        .border(1.dp, Color.Black),
+
+    ) {
+        Text(
+            text = "$label:",
+            modifier = Modifier
+                .fillMaxWidth(0.3f)
+//                .background(Color.Green)
+                .padding(top = 10.dp, bottom = 10.dp, start = 5.dp),
+            fontSize = 15.sp,
+//            fontWeight = FontWeight.Bold,
+        )
+
+        Text(
+            text = "$name",
+            modifier = Modifier
+                .fillMaxWidth()
+//                .background(Color.Blue)
+                .padding(top = 10.dp, bottom = 10.dp, start = 5.dp),
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
 
 
 @Preview(showBackground = true)
