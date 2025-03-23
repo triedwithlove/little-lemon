@@ -13,6 +13,10 @@ import com.koueka.littlelemon.composable.Onboarding
 
 const val SHARED_PREFERENCES_KEY = "LilLemPrefs"
 const val SHARED_PREFERENCES_DEFAULT_VALUE = "Empty"
+const val SHARED_PREFERENCES_FIRST_NAME = "FIRST_NAME"
+const val SHARED_PREFERENCES_LAST_NAME = "LAST_NAME"
+const val SHARED_PREFERENCES_EMAIL = "EMAIL"
+
 
 
 @Composable
@@ -33,7 +37,7 @@ fun LLNavigation(naviController: NavHostController) {
             Profile()
         }
         composable(Onboarding.route) {
-            Onboarding()
+            Onboarding(naviController)
         }
     }
 }
@@ -44,9 +48,29 @@ fun readSharedPreferences(context: Context): Boolean {
     val sharedPreferences : SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
 
-    val firstName = sharedPreferences.getString(SHARED_PREFERENCES_KEY,
+    val firstName = sharedPreferences.getString(
+        SHARED_PREFERENCES_FIRST_NAME,
         SHARED_PREFERENCES_DEFAULT_VALUE)
 
     val result = firstName.equals(SHARED_PREFERENCES_DEFAULT_VALUE)
     return result
+}
+
+//if the sharedPreferences have not been set the function will return true
+// and else otherwise
+fun saveSharedPreferences(
+    context: Context,
+    firstName: String,
+    lastName: String,
+    email: String
+) {
+    val sharedPreferences : SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
+
+    //save data
+    sharedPreferences.edit()
+        .putString(SHARED_PREFERENCES_FIRST_NAME, firstName)
+        .putString(SHARED_PREFERENCES_LAST_NAME, lastName)
+        .putString(SHARED_PREFERENCES_DEFAULT_VALUE, email)
+        .commit()
 }
