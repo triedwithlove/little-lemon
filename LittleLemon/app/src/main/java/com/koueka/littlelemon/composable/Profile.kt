@@ -74,14 +74,7 @@ fun Profile(navController: NavHostController) {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)) {
-//            var firstName by remember { mutableStateOf("") }
-//            var lastName by remember { mutableStateOf("") }
-//            var email by remember { mutableStateOf("") }
 
-
-
-
-//            val context = LocalContext.current
             val context = LocalContext.current
             fun logOut() {
                 clearSharedPreferences(context)
@@ -90,26 +83,7 @@ fun Profile(navController: NavHostController) {
 
             val userProfile: UserProfile = readAllDataSharedPreferences(context)
             android.util.Log.d("MAINACTIVITY", "${userProfile}")
-/*
-            fun checkFieldsAndRegister() {
-                if ((firstName.isBlank())
-                    || (lastName.isBlank())
-                    || (email.isBlank())
-                ) {
-                    android.util.Log.d("MAINACTIVITY", "Empty string")
-                    Toast.makeText(context,
-                        "Registration unsuccessfull\nPlease enter all data", Toast.LENGTH_LONG).show()
-                } else {
-                    android.util.Log.d("MAINACTIVITY", "All strings filled")
-                    //registration
-                    saveSharedPreferences(context, firstName, lastName, email)
-                    Toast.makeText(context,
-                        "Registration successfull", Toast.LENGTH_LONG).show()
-//                    navController.navigate(com.koueka.littlelemon.navigation.Home.route)
 
-                }
-            }
-*/
             ProfileItem(label = "First Name", name = "${userProfile.fName}")
             ProfileItem(label = "Last Name", name = "${userProfile.lName}")
             ProfileItem(label = "Email", name = "${userProfile.email}")
