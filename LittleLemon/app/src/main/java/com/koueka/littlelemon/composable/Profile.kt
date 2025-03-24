@@ -82,7 +82,7 @@ fun Profile(navController: NavHostController) {
             }
 
             val userProfile: UserProfile = readAllDataSharedPreferences(context)
-            android.util.Log.d("MAINACTIVITY", "${userProfile}")
+            android.util.Log.d("MainActivity", "${userProfile}")
 
             ProfileItem(label = "First Name", name = "${userProfile.fName}")
             ProfileItem(label = "Last Name", name = "${userProfile.lName}")

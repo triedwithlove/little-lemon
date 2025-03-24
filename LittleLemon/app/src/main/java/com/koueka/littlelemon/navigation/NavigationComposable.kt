@@ -26,12 +26,12 @@ fun LLNavigation(naviController: NavHostController) {
 
     //set default route to Home assuming that sharedPreferences have been set
     var destination = Home.route
-
+/* just for now
     //check sharedPreference
     if (readSharedPreferences(naviController.context)) {
         destination = Onboarding.route
     }
-
+*/
     NavHost(navController = naviController, startDestination = destination) {
         composable(Home.route) {
             Home(naviController)
