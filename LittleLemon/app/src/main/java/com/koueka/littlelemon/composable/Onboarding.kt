@@ -45,7 +45,6 @@ fun Onboarding(navController: NavHostController) {
             modifier = Modifier
                 .padding(50.dp)
                 .align(Alignment.CenterHorizontally)
-
         )
         Text(
             text = "Let's get to know you",
@@ -85,18 +84,16 @@ fun Onboarding(navController: NavHostController) {
                 ) {
                     android.util.Log.d("MAINACTIVITY", "Empty string")
                     Toast.makeText(context,
-                        "Registration unsuccessfull\nPlease enter all data", Toast.LENGTH_LONG).show()
+                        "Registration unsuccessful\nPlease enter all data", Toast.LENGTH_LONG).show()
                 } else {
                     android.util.Log.d("MAINACTIVITY", "All strings filled")
                     //registration
                     saveSharedPreferences(context, firstName, lastName, email)
                     Toast.makeText(context,
-                        "Registration successfull", Toast.LENGTH_LONG).show()
+                        "Registration successful", Toast.LENGTH_LONG).show()
                     navController.navigate(com.koueka.littlelemon.navigation.Home.route)
-
                 }
             }
-
 
             OutlinedTextField(
                 value = firstName,
