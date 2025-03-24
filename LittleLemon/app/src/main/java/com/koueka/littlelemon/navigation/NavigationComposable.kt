@@ -24,10 +24,8 @@ const val SHARED_PREFERENCES_EMAIL = "EMAIL"
 @Composable
 fun LLNavigation(naviController: NavHostController) {
 
-    //set defqult route to Home assuming that sharedpreferences have been set
-//    var destination = Home.route
-
-    var destination = Profile.route
+    //set default route to Home assuming that sharedPreferences have been set
+    var destination = Home.route
 
     //check sharedPreference
     if (readSharedPreferences(naviController.context)) {
@@ -36,7 +34,7 @@ fun LLNavigation(naviController: NavHostController) {
 
     NavHost(navController = naviController, startDestination = destination) {
         composable(Home.route) {
-            Home()
+            Home(naviController)
         }
         composable(Profile.route) {
             Profile(naviController)
