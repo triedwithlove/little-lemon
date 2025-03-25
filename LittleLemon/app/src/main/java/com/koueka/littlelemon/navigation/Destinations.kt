@@ -1,7 +1,6 @@
 package com.koueka.littlelemon.navigation
 
 
-
 interface Destinations {
     val route: String
 }

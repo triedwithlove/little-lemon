@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -25,7 +23,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -42,7 +39,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,29 +59,15 @@ import com.koueka.littlelemon.ui.theme.markazitextFamily
 fun Home(navController: NavHostController, databaseMenuItems: List<MenuItemRoom>) {
     Column(modifier = Modifier.padding(top = 40.dp, start = 0.dp)) {
 
-        //var menuItemList = databaseMenuItems
-
         Box(contentAlignment = Alignment.TopCenter,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp)
-                .padding(top = 15.dp, bottom = 15.dp)
-//            .background(Color.Blue)
-        ) {
+            modifier = Modifier.fillMaxWidth().height(80.dp).padding(top = 15.dp, bottom = 15.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo",
-                modifier = Modifier
-                    .scale(0.6f)
-                    .padding(0.dp)
-//                    .background(Color.Red)
+                modifier = Modifier.scale(0.6f).padding(0.dp)
             )
             Box(contentAlignment = Alignment.TopEnd,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 5.dp)
-//            .background(Color.Gray)
-//                    .align(Alignment.End)
+                modifier = Modifier.fillMaxWidth().padding(end = 5.dp)
             ) {
                 ProfileButton() {
                     navController.navigate(com.koueka.littlelemon.navigation.Profile.route)
@@ -98,10 +80,10 @@ fun Home(navController: NavHostController, databaseMenuItems: List<MenuItemRoom>
         //remove duplicates
         categoryList = categoryList.toSet().toList()
 
-        // add orderMenuItems variable here (whether or not sorting is enabled)
+        // add variable state to check if user selected a category
         var selectedMenuCategory by remember { mutableStateOf("Undefined") }
 
-        // add menuItems variable here
+        // set menuItems variable here
         var menuItems = if (!(selectedMenuCategory.equals("Undefined"))
             && (categoryList.contains(selectedMenuCategory))) {
             databaseMenuItems.filter { menuIt ->
@@ -109,47 +91,27 @@ fun Home(navController: NavHostController, databaseMenuItems: List<MenuItemRoom>
         } else {
             databaseMenuItems
         }
-/*
 
-        if (searchPhrase.isBlank()) {
-            //No Operation
-        } else {
-            menuItemList = menuItemList.filter {
-                    menuItemRoom ->  menuItemRoom.title.contains(searchPhrase, ignoreCase = true)}
-        }
-*/
         //hero section
         var menuItemList = HeroComposable(menuItems = menuItems)
 
-        Column (modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp, start = 10.dp, end = 10.dp)
-//        .background(Color.Gray)
-        ) {
+        Column (modifier = Modifier.fillMaxWidth().padding(top = 20.dp, start = 10.dp, end = 10.dp)) {
             Text(
                 text = "ORDER FOR DELIVERY!",
                 fontSize = 20.sp,
                 fontFamily = karlaFamily,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier
-//                            .background(Color.Black)
-//                .height(37.dp)
             )
             LazyRow(horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, start = 0.dp, end = 0.dp)
-//                .background(Color.Yellow)
-            ) {
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp)) {
                 items(
                     items = categoryList,
                     itemContent = { category ->
                         Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
                             Button(
-                                onClick = { /*TODO*/ selectedMenuCategory = category
-                                    android.util.Log.d("MainActivity", "Home Composable cat= $selectedMenuCategory ")
-
-                                             },
+                                onClick = { selectedMenuCategory = category
+                                    android.util.Log.d("MainActivity",
+                                        "Home Composable cat= $selectedMenuCategory ")},
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(LightColor1)
                             ) {
@@ -163,16 +125,11 @@ fun Home(navController: NavHostController, databaseMenuItems: List<MenuItemRoom>
                     }
                 )
             }
-
         }
-
-
-
 
         //menu section
         MenuItems(categoryList, items = menuItemList)
     }
-
 }
 
 @Composable
@@ -182,9 +139,7 @@ fun ProfileButton(onClick: () -> Unit) {
         painter = image,
         contentDescription = "profile",
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(50.dp)
-            .clickable { onClick() }
+        modifier = Modifier.size(50.dp).clickable { onClick() }
     )
 }
 
@@ -206,22 +161,15 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
             fontFamily = markazitextFamily,
             fontWeight = FontWeight.Medium,
             color = Yellow80,
-            modifier = Modifier
-//                    .background(Color.Magenta)
-                .padding(0.dp)
-                .height(45.dp)
+            modifier = Modifier.padding(0.dp).height(45.dp)
         )
         //city and description
         Row (horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom,
-            modifier = Modifier
-                .fillMaxWidth()
-//                    .background(Color.Red)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column (verticalArrangement = Arrangement.Top,
-                modifier = Modifier
-                    .fillMaxWidth(0.55f)
-                    .padding(0.dp)
+                modifier = Modifier.fillMaxWidth(0.55f).padding(0.dp)
             ) {
                 //city
                 Text(
@@ -230,9 +178,7 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
                     fontFamily = markazitextFamily,
                     fontWeight = FontWeight.Normal,
                     color = Color.White,
-                    modifier = Modifier
-//                            .background(Color.Black)
-                        .height(37.dp)
+                    modifier = Modifier.height(37.dp)
                 )
                 //Description
                 Text(
@@ -242,9 +188,7 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
                     fontFamily = karlaFamily,
                     lineHeight = 15.sp,
                     fontWeight = FontWeight.Normal,
-                    modifier = Modifier
-                        .padding(top = 20.dp, bottom = 10.dp)
-//                            .background(Color.Black)
+                    modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
                 )
             }
             //image
@@ -252,10 +196,7 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
                 painter = painterResource(id = R.drawable.hero_image),
                 contentDescription = "Hero section image",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(RoundedCornerShape(10.dp))
-//                    .background(Color.Red)
+                modifier = Modifier.size(120.dp).clip(RoundedCornerShape(10.dp))
             )
 
         }
@@ -267,10 +208,8 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "")
             },
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
                 .padding(top = 15.dp, bottom = 5.dp)
-                //.background(Color.White)
                 .clip(RoundedCornerShape(10.dp))
         )
 
@@ -288,25 +227,15 @@ private fun HeroComposable(menuItems: List<MenuItemRoom>): List<MenuItemRoom> {
 
 @Composable
 private fun OrderForDelivery(categories: List<String>) {
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 20.dp, start = 0.dp, end = 0.dp)
-//        .background(Color.Gray)
-    ) {
+    Column (modifier = Modifier.fillMaxWidth().padding(top = 20.dp)) {
         Text(
             text = "ORDER FOR DELIVERY!",
             fontSize = 20.sp,
             fontFamily = karlaFamily,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier
-//                            .background(Color.Black)
-//                .height(37.dp)
         )
         LazyRow(horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, start = 0.dp, end = 0.dp)
-//                .background(Color.Yellow)
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
         ) {
             items(
                 items = categories,
@@ -326,13 +255,8 @@ private fun OrderForDelivery(categories: List<String>) {
                 }
             )
         }
-
     }
-
 }
-
-
-
 
 
 @OptIn(ExperimentalGlideComposeApi::class, ExperimentalFoundationApi::class)
@@ -340,19 +264,10 @@ private fun OrderForDelivery(categories: List<String>) {
 private fun MenuItems(categoryList: List<String>, items: List<MenuItemRoom>) {
 
     Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxHeight()
-//            .background(Color.Red)
-            .padding(bottom = 40.dp)
-    ) {
+        modifier = Modifier.fillMaxHeight().fillMaxHeight().padding(bottom = 40.dp)) {
 
         LazyColumn(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(top = 0.dp, start = 10.dp, end = 10.dp)
-//                .background(Color.Magenta)
-        ) {
+            modifier = Modifier.fillMaxHeight().padding(start = 10.dp, end = 10.dp)) {
 /*
             item{
                 OrderForDelivery(categories = categoryList)
@@ -371,9 +286,7 @@ private fun MenuItems(categoryList: List<String>, items: List<MenuItemRoom>) {
                         ) {
 
                             Column (
-                                modifier = Modifier
-                                    .fillMaxWidth(0.75f)
-                                    .padding(end = 5.dp)
+                                modifier = Modifier.fillMaxWidth(0.75f).padding(end = 5.dp)
                             ) {
                                 Text(
                                     fontFamily = karlaFamily,
@@ -393,11 +306,7 @@ private fun MenuItems(categoryList: List<String>, items: List<MenuItemRoom>) {
                                     fontFamily = karlaFamily,
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 16.sp,
-                                    modifier = Modifier
-                                        // .weight(1f)
-                                        .padding(5.dp),
-                                    //     textAlign = TextAlign.Right,
-                                    //text = "$" + menuItem.price
+                                    modifier = Modifier.padding(5.dp),
                                     text = "$%.2f".format(menuItem.price)
                                 )
                             }

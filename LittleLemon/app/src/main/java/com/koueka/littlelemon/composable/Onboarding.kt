@@ -1,6 +1,5 @@
 package com.koueka.littlelemon.composable
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,20 +37,15 @@ import com.koueka.littlelemon.ui.theme.Yellow80
 
 @Composable
 fun Onboarding(navController: NavHostController) {
-    Column(modifier = Modifier.padding(top = 0.dp, start = 0.dp)) {
+    Column(modifier = Modifier.padding()) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
-            modifier = Modifier
-                .padding(50.dp)
-                .align(Alignment.CenterHorizontally)
+            modifier = Modifier.padding(50.dp).align(Alignment.CenterHorizontally)
         )
         Text(
             text = "Let's get to know you",
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Green80)
-                .padding(30.dp),
+            modifier = Modifier.fillMaxWidth().background(Green80).padding(30.dp),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -62,7 +56,6 @@ fun Onboarding(navController: NavHostController) {
             text = "Personal information",
             modifier = Modifier
                 .fillMaxWidth()
-//                .background(Color.White)
                 .padding(top = 40.dp, bottom = 10.dp, start = 5.dp),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
@@ -82,11 +75,10 @@ fun Onboarding(navController: NavHostController) {
                     || (lastName.isBlank())
                     || (email.isBlank())
                 ) {
-                    android.util.Log.d("MAINACTIVITY", "Empty string")
                     Toast.makeText(context,
-                        "Registration unsuccessful\nPlease enter all data", Toast.LENGTH_LONG).show()
+                        "Registration unsuccessful\nPlease enter all data", Toast.LENGTH_LONG)
+                        .show()
                 } else {
-                    android.util.Log.d("MAINACTIVITY", "All strings filled")
                     //registration
                     saveSharedPreferences(context, firstName, lastName, email)
                     Toast.makeText(context,
@@ -99,20 +91,14 @@ fun Onboarding(navController: NavHostController) {
                 value = firstName,
                 onValueChange = {newValue -> firstName = newValue},
                 label = { Text(text = "First Name")},
-                //placeholder = { Text(text = "First Name")}
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, bottom = 5.dp)
             )
 
             OutlinedTextField(
                 value = lastName,
                 onValueChange = {newValue -> lastName = newValue},
                 label = { Text(text = "Last Name")},
-                //placeholder = { Text(text = "First Name")}
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, bottom = 5.dp)
             )
 
             OutlinedTextField(
@@ -120,28 +106,21 @@ fun Onboarding(navController: NavHostController) {
                 onValueChange = {newValue -> email = newValue},
                 label = { Text(text = "Email")},
                 //placeholder = { Text(text = "First Name")}
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp, bottom = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, bottom = 5.dp)
             )
 
             Box (
-                modifier = Modifier
-                    .fillMaxSize()
-//                    .background(Color.White)
-                    .padding(bottom = 50.dp),
+                modifier = Modifier.fillMaxSize().padding(bottom = 50.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
                     onClick = { checkFieldsAndRegister() },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(Yellow80)
-
                 ) {
                     Text(
                         text = "Register",
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         fontSize = 20.sp,
                         color = Color.Black,
                         textAlign = TextAlign.Center
@@ -150,7 +129,6 @@ fun Onboarding(navController: NavHostController) {
             }
         }
     }
-
 }
 
 /*
