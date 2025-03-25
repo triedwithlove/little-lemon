@@ -58,6 +58,9 @@ dependencies {
     implementation libs.io.ktor.serialization.kotlin.json
     implementation libs.room.runtime
     kapt libs.room.compiler
+    implementation libs.compose.livedata
+    implementation libs.glide.compose
+
 
     implementation libs.androidx.core.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
