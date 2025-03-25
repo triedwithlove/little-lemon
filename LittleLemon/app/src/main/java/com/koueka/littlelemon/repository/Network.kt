@@ -11,7 +11,6 @@ data class MenuNetwork (
     val menu: List<MenuItemNetwork>
 )
 
-
 @Serializable
 data class MenuItemNetwork(
     @SerialName("id")
@@ -40,5 +39,4 @@ data class MenuItemNetwork(
         image,
         category
     )
-
 }

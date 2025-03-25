@@ -41,21 +41,16 @@ data class UserProfile(
 
 @Composable
 fun Profile(navController: NavHostController) {
-    Column(modifier = Modifier.padding(top = 30.dp, start = 0.dp)) {
+    Column(modifier = Modifier.padding(top = 30.dp)) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
-            modifier = Modifier
-                .padding(50.dp)
-                .align(Alignment.CenterHorizontally)
+            modifier = Modifier.padding(50.dp).align(Alignment.CenterHorizontally)
         )
 
         Text(
             text = "Profile",
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Green80)
-                .padding(30.dp),
+            modifier = Modifier.fillMaxWidth().background(Green80).padding(30.dp),
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -64,16 +59,11 @@ fun Profile(navController: NavHostController) {
 
         Text(
             text = "Profile information",
-            modifier = Modifier
-                .fillMaxWidth()
-//                .background(Color.White)
-                .padding(top = 40.dp, bottom = 10.dp, start = 5.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 40.dp, bottom = 10.dp, start = 5.dp),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
 
             val context = LocalContext.current
             fun logOut() {
@@ -88,10 +78,7 @@ fun Profile(navController: NavHostController) {
             ProfileItem(label = "Last Name", name = "${userProfile.lName}")
             ProfileItem(label = "Email", name = "${userProfile.email}")
             Box (
-                modifier = Modifier
-                    .fillMaxSize()
-//                    .background(Color.White)
-                    .padding(bottom = 50.dp),
+                modifier = Modifier.fillMaxSize().padding(bottom = 50.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
@@ -102,8 +89,7 @@ fun Profile(navController: NavHostController) {
                 ) {
                     Text(
                         text = "Log out",
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         fontSize = 20.sp,
                         color = Color.Black,
                         textAlign = TextAlign.Center
@@ -111,7 +97,6 @@ fun Profile(navController: NavHostController) {
                 }
             }
         }
-
     }
 
 }
@@ -120,27 +105,20 @@ fun Profile(navController: NavHostController) {
 fun ProfileItem(label: String, name: String) {
     Row(modifier = Modifier
         .fillMaxWidth()
-//        .background(Color.White)
         .padding(top = 5.dp, bottom = 5.dp, start = 5.dp)
         .border(1.dp, Color.Black),
-
     ) {
         Text(
             text = "$label:",
             modifier = Modifier
                 .fillMaxWidth(0.3f)
-//                .background(Color.Green)
                 .padding(top = 10.dp, bottom = 10.dp, start = 5.dp),
             fontSize = 15.sp,
-//            fontWeight = FontWeight.Bold,
         )
 
         Text(
             text = "$name",
-            modifier = Modifier
-                .fillMaxWidth()
-//                .background(Color.Blue)
-                .padding(top = 10.dp, bottom = 10.dp, start = 5.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp, start = 5.dp),
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold,
         )
