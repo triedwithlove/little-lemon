@@ -11,6 +11,7 @@ import com.koueka.littlelemon.composable.Home
 import com.koueka.littlelemon.composable.Profile
 import com.koueka.littlelemon.composable.Onboarding
 import com.koueka.littlelemon.composable.UserProfile
+import com.koueka.littlelemon.repository.data.MenuItemRoom
 
 
 const val SHARED_PREFERENCES_KEY = "LilLemPrefs"
@@ -22,7 +23,7 @@ const val SHARED_PREFERENCES_EMAIL = "EMAIL"
 
 
 @Composable
-fun LLNavigation(naviController: NavHostController) {
+fun LLNavigation(naviController: NavHostController, databaseMenuItems: List<MenuItemRoom>) {
 
     //set default route to Home assuming that sharedPreferences have been set
     var destination = Home.route
@@ -34,7 +35,7 @@ fun LLNavigation(naviController: NavHostController) {
 */
     NavHost(navController = naviController, startDestination = destination) {
         composable(Home.route) {
-            Home(naviController)
+            Home(naviController, databaseMenuItems)
         }
         composable(Profile.route) {
             Profile(naviController)
